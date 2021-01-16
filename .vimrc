@@ -15,6 +15,9 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'mileszs/ack.vim'
+Plugin 'airblade/vim-gitgutter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -35,6 +38,17 @@ set visualbell
 imap jk <Esc>
 set encoding=utf-8
 set incsearch
+syntax on
+
+" fixing gutter colors
+" https://github.com/airblade/vim-gitgutter/issues/164
+colorscheme solarized
+set background=dark
+highlight clear SignColumn
+highlight GitGutterAdd ctermbg=Black
+highlight GitGutterChange ctermbg=Black
+highlight GitGutterDelete ctermbg=Black
+highlight GitGutterChangeDelete ctermbg=Black
 
 " line numbers
 set number
@@ -48,6 +62,7 @@ set shiftwidth=4
 set expandtab
 set autoindent
 set fileformat=unix
+set backspace=indent,eol,start
 
 " splits
 set splitbelow
@@ -63,3 +78,11 @@ au BufNewFile,BufRead *.py
 
 " NERDTree
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$', '\.egg-info$', '__pycache__']
+
+" YCM
+let g:ycm_python_binary_path = '/Users/riskingh/.pyenv/shims/python'
+nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
+
+" gitgutter
+let g:gitgutter_log=1
