@@ -18,6 +18,9 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'mileszs/ack.vim'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'fatih/vim-go'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -80,9 +83,27 @@ au BufNewFile,BufRead *.py
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '\.egg-info$', '__pycache__']
 
+" CtrlP
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|\.pyc\|target'
+
 " YCM
 let g:ycm_python_binary_path = '/Users/riskingh/.pyenv/shims/python'
-nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
+autocmd FileType python nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
+autocmd FileType rust nnoremap <leader>g :YcmCompleter GoToDeclaration<CR>
+autocmd FileType rust nnoremap <leader>d :YcmCompleter GetDoc<CR>
+let g:ycm_auto_hover=''
+let g:ycm_filetype_blacklist = {'go': 1}
 
 " gitgutter
 let g:gitgutter_log=1
+
+" custom
+function! CopyRelativePath()
+    let @+ = expand("%")
+endfunction
+nnoremap <leader>p :call CopyRelativePath()<CR>
+
+nnoremap <leader>b :CtrlPBookmarkDir<CR>
+
+let g:go_def_mode = 'gopls'
+autocmd FileType go nnoremap <leader>g :GoDef <CR>
